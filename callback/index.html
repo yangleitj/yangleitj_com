@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tesla callback</title>
+</head>
+<body>
+  <main>
+    <h1>Tesla callback</h1>
+    <p id="status">No authorization code in this address.</p>
+    <pre id="details"></pre>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const code = params.get("code");
+    const state = params.get("state");
+    const error = params.get("error");
+    const desc = params.get("error_description");
+    const status = document.getElementById("status");
+    const details = document.getElementById("details");
+    if (error) {
+      status.textContent = "Tesla returned an error.";
+      details.textContent = error + (desc ? "\n" + desc : "");
+    } else if (code) {
+      status.textContent = "Authorization code received. Copy it from this page.";
+      details.textContent = "code\n" + code + (state ? "\n\nstate\n" + state : "");
+    }
+  </script>
+</body>
+</html>
